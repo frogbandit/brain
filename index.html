@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div id="posts"></div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.7.0/lodash.min.js"></script>
+  <ol id="fb-root"></ol>
+  <script>
+    window.fbAsyncInit = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '665160653502325',                        // App ID from the app dashboard
+        channelUrl : 'channel.html',                      // Channel file for x-domain comms
+        status     : true,                                 // Check Facebook Login status
+        xfbml      : true                                  // Look for social plugins on the page
+      });
+
+      FB.api('/372644179500230/posts?access_token=CAAJc9ch4d3UBAI3Sh0kZBkXZCPXRoQqjcKl01WZChOsZB2gL6rUk2a2CRiW0gu3udIfgpDrGrhClmuT3D7fICI9sDgYGYnuFOvk4E8ClUFcOzr9J5AXI2ZArsEk5MobxZAw2tdoFCq8ZAPWZCt4Aav02JfKowZAagFdmxy30ygX79ogXmRm1a5aItrNzZAiWASKgcZD&limit=25&fields=likes.limit(5000),message', function(response) {
+        var data = response.data;
+
+        data.sort(function(a, b) {
+
+          var a_likes = 0;
+          if (a.likes) {
+            a_likes = a.likes.data.length;
+          }
+
+          var b_likes = 0;
+          if (b.likes) {
+            b_likes = b.likes.data.length;
+          }
+
+          return b_likes - a_likes;
+        });
+
+        for (var i in data) {
+          $('#posts').append('<li>' + data[i].message + '</li>');
+        }
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
