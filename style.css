@@ -19,6 +19,13 @@ body {
 	top: 0;
 }
 
+
+#searches{
+	color:black;
+	font-size: 20px;
+	font-family: Tahoma;
+}
+
 li{
 	font-family: Tahoma;
 	font-size: 17px;
