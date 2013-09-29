@@ -8,13 +8,16 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <h1>asdf</h1>
-  <div id="posts"></div>
+  <div id="topbar">
+      <p id="brand">Angela</p>
+  </div>
+  
+  <ol id="posts"></ol>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.7.0/lodash.min.js"></script>
-  <ol id="fb-root"></ol>
+  <div id="fb-root"></div>
 
   <script>
     window.fbAsyncInit = function() {
@@ -26,7 +29,9 @@
         xfbml      : true                                  // Look for social plugins on the page
       });
 
-      FB.api('/372644179500230/posts?access_token=CAAJc9ch4d3UBAI3Sh0kZBkXZCPXRoQqjcKl01WZChOsZB2gL6rUk2a2CRiW0gu3udIfgpDrGrhClmuT3D7fICI9sDgYGYnuFOvk4E8ClUFcOzr9J5AXI2ZArsEk5MobxZAw2tdoFCq8ZAPWZCt4Aav02JfKowZAagFdmxy30ygX79ogXmRm1a5aItrNzZAiWASKgcZD&limit=25&fields=likes.limit(5000),message', function(response) {
+      var token = "CAAJc9ch4d3UBAGBarQ1bxbnkscMgWcYpONIHnqS0BvLG0X5bjNqohGuDAORtYpOEANuF6cIljAVejTuDzcYGAwwKAJN56mZCEbSej15H6D3unDKJ1r8BCHwasqkPxRCgOvYhHINK0H8cJ8b7YIW7WV9xSZAswsPQtm9GycjS6cnMgi8XiOZB3PJwb7uI6MZD";
+
+      FB.api('/372644179500230/posts?access_token='+token+'&limit=25&fields=likes.limit(5000),message', function(response) {
         var data = response.data;
 
         data.sort(function(a, b) {
@@ -45,7 +50,7 @@
         });
 
         for (var i in data) {
-          $('#posts').append('<li>' + data[i].message + '</li>');
+          $('#posts').append('<li>' + data[i].message + '</li>' + '<hr></hr>');
         }
       });
     };
