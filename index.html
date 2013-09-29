@@ -10,18 +10,26 @@
 </head>
 <body>
   <div id="topbar">
-      <span id="brand">Angela<a id="about" href ="About.html">About</a></span>
+      <span id="brand">Angela<a href='about.html' id="about">About</a></span>
       
   </div>
   <center>
-    <div id="inputbox">
+    <form id="inputbox">
       <span>Type in the URL you want to sort: </span>
       <input type="text" id="page-id" placeholder="Facebook ID"></input>
       <button id="login-to-facebook" class="btn btn-primary">Get Posts</button>
-    </div>
+    </form>
   </center>
 
-  <div id ="searches">Popular Searches</div>
+  <div id = "searches"><strong>Popular Searches</strong>
+  <p></p>
+  <p><a href = "https://www.facebook.com/pages/Stanford-Confessions/372644179500230">Stanford Confessions</a><a id = "notlink">: 372644179500230</a></p>
+  <p><a href = "https://www.facebook.com/pages/StanfordCrushes">Stanford Crushes</a><a id = "notlink">: StanfordCrushes</a></p>
+  <p><a href = "https://www.facebook.com/pages/teslamotors">Tesla Motors</a><a id = "notlink">: teslamotors</a></p>
+  <p><a href = "https://www.facebook.com/pages/hackNY">hackNY</a><a id = "notlink">: hackNY</a></p>
+  <p><a href = "https://www.facebook.com/pages/-This-Person-With-The-Comment-Above-Me-Got-Raped-By-A-Horse/391901417509177">This Person With The Comment Above Me Got Raped By A Horse</a><a id = "notlink">: 391901417509177</a></p>
+  </div>
+
 
   <ol id="posts"></ol>
     
@@ -48,14 +56,13 @@
         xfbml      : true                                  // Look for social plugins on the page
       });
 
-      $('#login-to-facebook').click(function () {
+      $('#inputbox').submit(function () {
         var page_id = $('#page-id').val();
 
         FB.login(function(response) {
           if (response.authResponse) {
             FB.api('/'+page_id+'/posts?limit=50&fields=likes.limit(5000),message', function(response) {
               var data = response.data;
-
               data.sort(function(a, b) {
 
                 var a_likes = 0;
@@ -71,14 +78,26 @@
                 return b_likes - a_likes;
               });
 
+              $('#posts').empty();
+
               for (var i in data) {
                 $('#posts').append('<li>' + data[i].message + '</li><br>');
 
                 $('#posts').append('Number of likes: ' + data[i].likes.data.length + '<hr></hr>');
               }
             });
+            $('#posts').empty();
+            $('#posts').append('loading...');
+            
+            $.get('http://brainhackny.herokuapp.com/' + page_id, function (data) {
+              for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                }
+              }
+            }, 'jsonp');
           }
         });
+        return false;
       });
     };
 
