@@ -5,18 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title></title>
 
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css">
+ 
 </head>
 <body>
   <div id="topbar">
-      <p id="brand">Angela</p>
+      <span id="brand">Angela<span id="about">About</span></span>
+      
   </div>
-  
-  <ol id="posts"></ol>
+  <center>
+    <div id="inputbox">
+      <span>Type in the URL you want to sort: </span>
+      <input type="text" id="page-id" placeholder="Facebook ID"></input>
+      <button id="login-to-facebook" class="btn btn-primary">Get Posts</button>
+    </div>
+  </center>
 
+  <ol id="posts"></ol>
+  
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.7.0/lodash.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   <div id="fb-root"></div>
 
   <script>
@@ -29,29 +45,37 @@
         xfbml      : true                                  // Look for social plugins on the page
       });
 
-      var token = "CAAJc9ch4d3UBAGBarQ1bxbnkscMgWcYpONIHnqS0BvLG0X5bjNqohGuDAORtYpOEANuF6cIljAVejTuDzcYGAwwKAJN56mZCEbSej15H6D3unDKJ1r8BCHwasqkPxRCgOvYhHINK0H8cJ8b7YIW7WV9xSZAswsPQtm9GycjS6cnMgi8XiOZB3PJwb7uI6MZD";
+      $('#login-to-facebook').click(function () {
+        var page_id = $('#page-id').val();
 
-      FB.api('/372644179500230/posts?access_token='+token+'&limit=25&fields=likes.limit(5000),message', function(response) {
-        var data = response.data;
+        FB.login(function(response) {
+          if (response.authResponse) {
+            FB.api('/'+page_id+'/posts?limit=25&fields=likes.limit(5000),message', function(response) {
+              var data = response.data;
 
-        data.sort(function(a, b) {
+              data.sort(function(a, b) {
 
-          var a_likes = 0;
-          if (a.likes) {
-            a_likes = a.likes.data.length;
+                var a_likes = 0;
+                if (a.likes) {
+                  a_likes = a.likes.data.length;
+                }
+
+                var b_likes = 0;
+                if (b.likes) {
+                  b_likes = b.likes.data.length;
+                }
+
+                return b_likes - a_likes;
+              });
+
+              for (var i in data) {
+                $('#posts').append('<li>' + data[i].message + '</li><br>');
+
+                $('#posts').append('Number of likes: ' + data[i].likes.data.length + '<hr></hr>');
+              }
+            });
           }
-
-          var b_likes = 0;
-          if (b.likes) {
-            b_likes = b.likes.data.length;
-          }
-
-          return b_likes - a_likes;
         });
-
-        for (var i in data) {
-          $('#posts').append('<li>' + data[i].message + '</li>' + '<hr></hr>');
-        }
       });
     };
 
