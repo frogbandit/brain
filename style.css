@@ -11,6 +11,20 @@ body {
 	padding: 0;
 }
 
+#searches{
+	font-size: 14px;
+	font-family: Tahoma;
+	margin-left: 1200px;
+	position: fixed;
+}
+
+#notlink{
+	font-size: 14px;
+	font-family: Tahoma;
+	text-decoration: none;
+	color: black;
+}
+
 #topbar {
 	background-color: #75B2DD;
 	width: 100%;
