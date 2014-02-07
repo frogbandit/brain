@@ -1,8 +1,7 @@
 brain
 =====
 
-<<<<<<< HEAD
 Sorts posts on a facebook page by number of likes.
 =======
-Read me.
->>>>>>> origin/master
+
+created during HackNY 2013
