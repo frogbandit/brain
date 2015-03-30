@@ -88,14 +88,8 @@
             });
             $('#posts').empty();
             $('#posts').append('loading...');
-            $asdfasd
-
-            //$.get('http://polar-eyrie-5325.herokuapp.com/' + page_id, function (data) {
-            //$.get('http://brainhacknyc.herokuapp.com/' + page_id, function (data) {
-            //$.get('http://https://github.com/frogbandit/brain' + page_id, function (data) {
-
-            $.get('https://github.com/frogbandit/brain/tree/master/' + page_id, function (data) {
-
+            
+            $.get('http://brainhackny.herokuapp.com/' + page_id, function (data) {
               for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                 }
