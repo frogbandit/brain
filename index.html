@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brian</title>
+
+  <link href="style.css" rel="stylesheet" type="text/css">
+ 
+</head>
+<body>
+  <div id="topbar">
+      <span id="brand">Angela<a href='about.html' id="about">About</a><a href='demo.html' id="demo">Demo</a></span>
+      
+  </div>
+  <center>
+    <form id="inputbox">
+      <span>Type in the URL you want to sort: </span>
+      <input type="text" id="page-id" placeholder="Facebook ID"></input>
+      <button id="login-to-facebook" class="btn btn-primary">Get Posts</button>
+    </form>
+  </center>
+
+  <div id = "searches"><strong>Popular Searches</strong>
+  <p></p>
+  <p><a href = "https://www.facebook.com/pages/Stanford-Confessions/372644179500230">Stanford Confessions</a><a id = "notlink">: 372644179500230</a></p>
+  <p><a href = "https://www.facebook.com/pages/StanfordCrushes">Stanford Crushes</a><a id = "notlink">: StanfordCrushes</a></p>
+  <p><a href = "https://www.facebook.com/pages/teslamotors">Tesla Motors</a><a id = "notlink">: teslamotors</a></p>
+  <p><a href = "https://www.facebook.com/pages/hackNY">hackNY</a><a id = "notlink">: hackNY</a></p>
+  <p><a href = "https://www.facebook.com/pages/-This-Person-With-The-Comment-Above-Me-Got-Raped-By-A-Horse/391901417509177">This Person With The Comment Above Me Got Raped By A Horse</a><a id = "notlink">: 391901417509177</a></p>
+  </div>
+
+
+  <ol id="posts"></ol>
+    
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/lodash/3.5.0/lodash.compat.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!-- Optional theme --> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <div id="fb-root"></div>
+
+  <script>
+    window.fbAsyncInit = function() {
+      // init the FB JS SDK
+      FB.init({
+        //appId      : '665160653502325',                        // App ID from the app dashboard
+        appId      : '651954378266773',
+        channelUrl : 'channel.html',                      // Channel file for x-domain comms
+        status     : true,                                 // Check Facebook Login status
+        xfbml      : true                                  // Look for social plugins on the page
+      });
+
+      $('#inputbox').submit(function () {
+        var page_id = $('#page-id').val();
+
+        FB.login(function(response) {
+          if (response.authResponse) {
+            FB.api('/'+page_id+'/posts?limit=50&fields=likes.limit(5000),message', function(response) {
+              var data = response.data;
+              data.sort(function(a, b) {
+
+                var a_likes = 0;
+                if (a.likes) {
+                  a_likes = a.likes.data.length;
+                }
+
+                var b_likes = 0;
+                if (b.likes) {
+                  b_likes = b.likes.data.length;
+                }
+
+                return b_likes - a_likes;
+              });
+
+              $('#posts').empty();
+
+              for (var i in data) {
+                $('#posts').append('<li>' + data[i].message + '</li><br>');
+
+                $('#posts').append('Number of likes: ' + data[i].likes.data.length + '<hr></hr>');
+              }
+            });
+            $('#posts').empty();
+            $('#posts').append('loading...');
+            
+            $.get('http://brainhacknyc.herokuapp.com/' + page_id, function (data) {
+            //$.get('http://https://github.com/frogbandit/brain' + page_id, function (data) {
+              for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                }
+              }
+            }, 'jsonp');
+          }
+        });
+        return false;
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "http://connect.facebook.net/en_US/all.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
