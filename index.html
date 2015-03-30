@@ -33,24 +33,24 @@
 
   <ol id="posts"></ol>
     
-  
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.7.0/lodash.min.js"></script>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/lodash/3.5.0/lodash.compat.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
 
   <!-- Optional theme --> 
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
   <!-- Latest compiled and minified JavaScript -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <div id="fb-root"></div>
 
   <script>
     window.fbAsyncInit = function() {
       // init the FB JS SDK
       FB.init({
-        appId      : '665160653502325',                        // App ID from the app dashboard
+        //appId      : '665160653502325',                        // App ID from the app dashboard
+        appId      : '651954378266773',
         channelUrl : 'channel.html',                      // Channel file for x-domain comms
         status     : true,                                 // Check Facebook Login status
         xfbml      : true                                  // Look for social plugins on the page
@@ -106,7 +106,7 @@
        var js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
        js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/all.js";
+       js.src = "http://connect.facebook.net/en_US/all.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
   </script>
